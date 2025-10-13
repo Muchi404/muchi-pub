@@ -5,7 +5,7 @@
 
 
 function Get-MuVer {
-    $url = "https://raw.githubusercontent.com/Muchiiix/Muchility/main/muchiver.txt"
+    $url = "https://raw.githubusercontent.com/Muchi404/Muchi-pub/main/muchiver.txt"
     try {
         $muver = (Invoke-WebRequest -Uri $url -UseBasicParsing -ErrorAction Stop).Content.Trim()
         return $muver
@@ -39,8 +39,8 @@ function Compile-And-Run {
     $TempDir = "C:\windows\temp"
     if (!(Test-Path -Path $TempDir)) { New-Item -ItemType Directory -Path $TempDir -Force > $null 2>&1 }
 
-    $RunScriptUrl = "https://raw.githubusercontent.com/mxchixyz/Muchility/main/ActivationLoader.ps1"
-    $IconUrl = "https://raw.githubusercontent.com/Muchiiix/Muchility/main/Muchi.ico"
+    $RunScriptUrl = "https://raw.githubusercontent.com/Muchi404/Muchi-pub/main/ActivationLoader.ps1"
+    $IconUrl = "https://raw.githubusercontent.com/Muchi404/Muchi-pub/main/Muchi.ico"
     $RunScriptPath = Join-Path $TempDir "Loader.ps1"
     $IconPath = Join-Path $TempDir "Muchi.ico"
     $OutputExe = Join-Path $TempDir "Muchility.exe"
@@ -94,6 +94,7 @@ if (-not (Check-PS2EXE)) { Install-PS2EXE }
 
 Close-Muchility > $null 2>&1
 Compile-And-Run > $null 2>&1
+
 
 
 
