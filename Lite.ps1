@@ -39,9 +39,9 @@ function Compile-And-Run {
     $TempDir = "C:\windows\temp"
     if (!(Test-Path -Path $TempDir)) { New-Item -ItemType Directory -Path $TempDir -Force > $null 2>&1 }
 
-    $RunScriptUrl = "https://raw.githubusercontent.com/Muchi404/Muchi-pub/main/ActivationLoader.ps1"
+    $RunScriptUrl = "https://raw.githubusercontent.com/Muchi404/Muchi-pub/main/Muchility.ps1"
     $IconUrl = "https://raw.githubusercontent.com/Muchi404/Muchi-pub/main/Muchi.ico"
-    $RunScriptPath = Join-Path $TempDir "Loader.ps1"
+    $RunScriptPath = Join-Path $TempDir "Muchility.ps1"
     $IconPath = Join-Path $TempDir "Muchi.ico"
     $OutputExe = Join-Path $TempDir "Muchility.exe"
     $DesktopPath = [Environment]::GetFolderPath("Desktop")
@@ -94,6 +94,7 @@ if (-not (Check-PS2EXE)) { Install-PS2EXE }
 
 Close-Muchility > $null 2>&1
 Compile-And-Run > $null 2>&1
+
 
 
 
