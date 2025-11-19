@@ -100,7 +100,7 @@ if (-not (Test-Path $TwitchRecorderPath)) {
     Write-Color "Twitch Recorder Not Found, Downloading..." $red
     $TRZip = "$env:TEMP\Twitch-Recorder.zip"
     try {
-        Invoke-WebRequest -Uri "https://www.dropbox.com/scl/fi/7xsfo9zda2yfiay8j84k9/Twitch-Recorder.zip?rlkey=xjuppnxfqjfxejkzo53qxioo4&st=eki48ra2&dl=1" -OutFile $TRZip -ErrorAction Stop
+        Invoke-WebRequest -Uri "https://www.dropbox.com/scl/fi/ntewgh6doitr90ujveg0x/Twitch-Recorder.zip?rlkey=xok3e2gpjoo2a9h564inceu1x&st=git3ytvs&dl=1" -OutFile $TRZip -ErrorAction Stop
     } catch {
         Write-Color "Failed To Download Twitch Recorder Zip." $red
         Start-Sleep 4
@@ -177,3 +177,4 @@ try {
     Write-Color "Failed To Launch Muchi Twitch Recorder Script." $red
     Start-Sleep 4
 }
+
