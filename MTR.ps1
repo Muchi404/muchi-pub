@@ -136,31 +136,24 @@ Function Start-MTR {
     }
 
     Check-Streamlink
-    Start-Sleep 1
     Clear-Host
 
     Check-Python
-    Start-Sleep 1
     Clear-Host
 
     Check-Requests
-    Start-Sleep 1
     Clear-Host
 
     Check-FFmpeg
-    Start-Sleep 1
     Clear-Host
 
     Check-TwitchRecorder
-    Start-Sleep 1
     Clear-Host
 
     Setup-VODsShortcut
-    Start-Sleep 1
     Clear-Host
 
     Write-Output "Checks complete. Launching Muchi Twitch Recorder!"
-    Start-Sleep 2
 
     try {
         $remote = "$env:TEMP\mtr.ps1"
@@ -172,3 +165,4 @@ Function Start-MTR {
 }
 
 Start-MTR
+
