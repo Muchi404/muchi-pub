@@ -54,60 +54,41 @@ Function Get-StreamerName {
 }
 # =========================
 Function Save-StreamerScript {
-    param($Streamer)
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Streamer
+    )
 
-    $Ps1Path = Join-Path $Temp "$Streamer.ps1"
+    $TemplateUrl  = "https://raw.githubusercontent.com/Muchi404/muchi-pub/main/temp.ps1"
+    $TargetFolder  = "C:\Program Files\Twitch Recorder"
+    $TemplatePath  = Join-Path $TargetFolder "temp.ps1"
+    $TempPs1Path   = Join-Path "C:\Windows\Temp" "$Streamer.ps1"
 
-    $Script = @'
-# Set console colors
-$Host.UI.RawUI.BackgroundColor = "Black"
-$Host.UI.RawUI.ForegroundColor = "White"
-Clear-Host
-
-$BasePath = "C:\Program Files\Twitch Recorder"
-$MotherFolder = Join-Path $BasePath "DONT DELETE"
-$RootPath = Join-Path $BasePath "Streamers"
-
-if (-not (Test-Path $MotherFolder)) { throw "Mother folder not found: $MotherFolder" }
-
-Function Setup-StreamerFolder {
-    param($StreamerName)
-
-    $NewFolder = Join-Path $RootPath $StreamerName
-
-    if (-not (Test-Path $NewFolder)) {
-        New-Item -Path $NewFolder -ItemType Directory | Out-Null
+    # Ensure Program Files folder exists
+    if (-not (Test-Path $TargetFolder)) {
+        New-Item -Path $TargetFolder -ItemType Directory -Force | Out-Null
     }
 
-    $FilesToCopy = @(".gitignore", "LICENSE", "README.md", "twitch-recorder.py")
-    foreach ($File in $FilesToCopy) {
-        Copy-Item -Path (Join-Path $MotherFolder $File) -Destination $NewFolder -Force
+    # Download template if it doesn't exist
+    if (-not (Test-Path $TemplatePath)) {
+        Write-Host "Downloading template PS1..." -ForegroundColor Cyan
+        Invoke-WebRequest -Uri $TemplateUrl -OutFile $TemplatePath -UseBasicParsing -ErrorAction Stop
+        Write-Host "Template saved to $TemplatePath" -ForegroundColor Green
+    } else {
+        Write-Host "Template already exists: $TemplatePath" -ForegroundColor Yellow
     }
 
-    $MotherConfig = Join-Path $MotherFolder "config.py"
-    $NewConfig = Join-Path $NewFolder "config.py"
-    $ConfigContent = Get-Content $MotherConfig -Raw
-    $ConfigContent = $ConfigContent -replace 'username\s*=\s*".*?"', 'username = "REPLACEME"'
-    Set-Content -Path $NewConfig -Value $ConfigContent -Encoding UTF8
+    # Copy template to temp and replace streamer placeholder
+    Copy-Item -Path $TemplatePath -Destination $TempPs1Path -Force
+    $Content = Get-Content $TempPs1Path -Raw
+    $Content = $Content -replace "REPLACEME", $Streamer
+    Set-Content -Path $TempPs1Path -Value $Content -Encoding UTF8 -Force
 
-    return $NewFolder
-}
+    # Verify
+    if (-not (Test-Path $TempPs1Path)) { throw "Failed to prepare PS1 for $Streamer" }
 
-Function Run-Recorder {
-    param($Folder)
-    & python "$Folder\twitch-recorder.py"
-}
-
-$StreamerFolder = Setup-StreamerFolder -StreamerName "REPLACEME"
-Run-Recorder -Folder $StreamerFolder
-'@
-
-    $Script = $Script -replace "REPLACEME", $Streamer
-    Set-Content -Path $Ps1Path -Value $Script -Encoding UTF8 -Force
-
-    if (-not (Test-Path $Ps1Path)) { throw "PS1 file was not created" }
-
-    return $Ps1Path
+    Write-Host "Streamer PS1 ready: $TempPs1Path" -ForegroundColor Green
+    return $TempPs1Path
 }
 # =========================
 Function Download-StreamerPNG {
@@ -226,4 +207,3 @@ Function Run-Compiler {
 }
 # =========================
 Run-Compiler
-Read-Host
