@@ -1,5 +1,4 @@
 Function Install-Apps {
-    winget install --id Guru3D.Afterburner -e --silent
     winget install --id Brave.Brave -e --silent
     winget install --id Discord.Discord -e --silent
     winget install --id Valve.Steam -e --silent
@@ -26,10 +25,10 @@ Function Run-MuchiAIO {
 }
 
 Function Muchi-Scripts {
+	Run-MuchiDebloat
 	Run-MuchiAIO
-	Run-MuchiRedists
-    Run-MuchiDebloat
     Run-MuchiSpotify
+	Run-MuchiRedists
 }
 
 Function Set-MuchiWallpaper {
@@ -52,5 +51,5 @@ public class Wallpaper {
 }
 
 Set-MuchiWallpaper
-Install-Apps
 Muchi-Scripts
+Install-Apps
