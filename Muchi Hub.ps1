@@ -46,7 +46,7 @@ function Get-RainbowText {
 
 $Apps = [ordered]@{
     "1" = "Muchility (Tweaks)"
-    "2" = "Twitch Recorder"
+    "2" = "Activate Windows"
     "3" = "Apex Legends Performance Mode"
     "4" = "Microsoft Redists AIO Installer"
     "5" = "Upgrade Windows Edition (Home > Pro)"
@@ -57,7 +57,7 @@ $Apps = [ordered]@{
 
 $Links = @{
     "1" = "muchi.online/app"
-    "2" = "muchi.online/twitch"
+    "2" = "muchi.online/activate"
     "3" = "muchi.online/apex"
     "4" = "muchi.online/redists"
     "5" = "muchi.online/upgrade"
@@ -95,3 +95,4 @@ while ($true) {
         Start-Sleep 1
     }
 }
+
