@@ -3,7 +3,7 @@
 #║ ║ ║ ║║*║*║║*╚═╣║*╔╗*║║*║"
 #╚═╩═╩═╝╚═══╝╚═══╝╚═╝╚═╝╚═╝"
 
-$GoodApps = "calculator|store|windowsnotepad|chatgpt|minecraft|nvidia|Microsoft.Xbox.TCUI|XboxGameCallableUI|XboxGamingOverlay|XboxIdentityProvider|"
+$GoodApps = "calculator|store|windowsnotepad|chatgpt|minecraft|nvidia|Microsoft.Xbox.TCUI|XboxGameCallableUI|XboxGamingOverlay|XboxIdentityProvider|ImageMagick|NotepadPlusPlus|Microsoft.WindowsNotepad|Microsoft.MicrosoftEdge.Stable|AdvancedMicroDevices|Python"
 
 Function RemoveApps {
     # SafeApps contains apps that shouldn't be removed, or just can't and cause errors
@@ -41,6 +41,7 @@ Function RemoveApps {
 # End Function RemoveApps
 
 RemoveApps
+
 
 
 
