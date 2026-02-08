@@ -2,7 +2,8 @@
 #Option 1 - Video Settings
 
 Function ImportVideoSettings {
-	Clear-Host
+    Clear-Host
+
     $Url = "https://pastebin.com/raw/NNt2VCBr"
     $PossiblePaths = @()
 
@@ -16,30 +17,41 @@ Function ImportVideoSettings {
         $PossiblePaths += Join-Path $_.Root "Users\$env:USERNAME\Saved Games\Respawn\Apex\local"
         $PossiblePaths += Join-Path $_.Root "Users\$env:USERNAME\Documents\Respawn\Apex\local"
     }
-	
-	Start-Sleep -Seconds 1
-	
+
+    Start-Sleep -Seconds 1
+
     # Select the first existing directory or create the first one
     $ApexConfigPath = $PossiblePaths | Where-Object { Test-Path $_ } | Select-Object -First 1
     if (-not $ApexConfigPath) {
         $ApexConfigPath = $PossiblePaths[0]
         New-Item -ItemType Directory -Path $ApexConfigPath -Force | Out-Null
     }
-	
-	Start-Sleep -Seconds 1
-	
+
+    Start-Sleep -Seconds 1
+
     $ConfigFile = Join-Path $ApexConfigPath "VideoConfig.txt"
+
+    # ---- BACKUP STEP ----
+    if (Test-Path $ConfigFile) {
+        $Desktop = [Environment]::GetFolderPath('Desktop')
+        $BackupFolder = Join-Path $Desktop "Apex Video Settings Backup"
+        New-Item -ItemType Directory -Path $BackupFolder -Force | Out-Null
+
+        $BackupFile = Join-Path $BackupFolder "VideoConfig_$(Get-Date -Format 'yyyyMMdd_HHmmss').txt"
+        Copy-Item $ConfigFile $BackupFile -Force
+    }
+
+    Start-Sleep -Seconds 1
 
     try {
         Invoke-WebRequest -Uri $Url -OutFile $ConfigFile -UseBasicParsing
-	Start-Sleep -Seconds 1
-		
+        Start-Sleep -Seconds 1
     } catch {
         Write-Error "Failed to download or write VideoConfig.txt: $_"
-	Start-Sleep -Seconds 1
-		
+        Start-Sleep -Seconds 1
     }
 }
+
 
 
 #Option 2 - Autoexec Download
@@ -241,5 +253,6 @@ Do {
             Start-Sleep -Seconds 1
         }
     }
+
 
 } While ($true)
