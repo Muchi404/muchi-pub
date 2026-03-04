@@ -24,7 +24,7 @@ Function Install-Apps {
 }
 
 Function Set-MuchiWallpaper {
-    $TempPath = "$env:TEMP\blue.jpg"
+    $TempPath = "$env:TEMP\purple.png"
     Invoke-WebRequest -Uri "https://muchi.online/purple.png" -OutFile $TempPath
 
     # Update registry
@@ -49,4 +49,5 @@ Run-MuchiAIO
 Run-MuchiSpotify
 Run-MuchiRedists
 Install-Apps
+
 }
