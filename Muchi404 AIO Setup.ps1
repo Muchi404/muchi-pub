@@ -49,5 +49,6 @@ Run-MuchiAIO
 Run-MuchiSpotify
 Run-MuchiRedists
 Install-Apps
-
 }
+
+RunAll
