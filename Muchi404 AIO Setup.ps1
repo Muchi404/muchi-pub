@@ -14,6 +14,14 @@ Function Run-MuchiRedists {
     Start-Process powershell -ArgumentList "iwr -useb 'muchi.online/redists' | iex"
 }
 
+Function Run-MuchiExtras {
+    Start-Process powershell -ArgumentList "iwr -useb 'muchi.online/extras' | iex"
+}
+
+Function Run-MuchiExe {
+    Start-Process powershell -ArgumentList "iwr -useb 'muchi.online/exe' | iex"
+}
+
 Function Install-Apps {
     winget install --id 7zip.7zip -e --silent
     winget install --id VideoLAN.VLC -e --silent
@@ -48,6 +56,8 @@ Run-MuchiDebloat
 Run-MuchiAIO
 Run-MuchiSpotify
 Run-MuchiRedists
+Run-MuchiExtras
+Run-MuchiExe
 Install-Apps
 }
 
