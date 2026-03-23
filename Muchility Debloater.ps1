@@ -212,8 +212,7 @@ Function Show-SoftwareMenu {
 		"1" { Install-Store }  
         "2" { RemoveAndUninstall-OneDrive } 
         "3" { Set-AppsRegistry } 
-		"4" { Write-Host "Muchi's Debloater started in background." -ForegroundColor Yellow
-		Start-Job -ScriptBlock { Muchi-Debloater } | Out-Null}
+		"4" { Muchi-Debloater }
         "0" { Show-MuchilityMainMenu }
         default { Write-Host "Selected: $choice"; Show-SoftwareMenu }
     }
