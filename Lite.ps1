@@ -20,7 +20,7 @@ $wsh = New-Object -ComObject WScript.Shell
 $shortcut = $wsh.CreateShortcut($shortcutPath)
 
 $shortcut.TargetPath = "powershell.exe"
-$shortcut.Arguments = '-NoProfile -ExecutionPolicy Bypass -Command "iwr -useb ''https://muchi.online/app'' | iex"'
+$shortcut.Arguments = '-NoProfile -ExecutionPolicy Bypass -Command "iwr -useb ''https://raw.githubusercontent.com/Muchi404/muchi-pub/main/Muchility.ps1'' | iex"'
 $shortcut.IconLocation = $iconPath
 $shortcut.WorkingDirectory = $installPath
 
