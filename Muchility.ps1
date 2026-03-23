@@ -1,3 +1,48 @@
+# ==========================
+#  RAINBOW
+# ==========================
+
+$e = [char]27
+$r = "$e[0m"
+
+$rainbow = @(
+    "$e[38;2;255;182;193m","$e[38;2;255;186;191m","$e[38;2;255;190;189m",
+    "$e[38;2;255;194;187m","$e[38;2;255;198;185m","$e[38;2;255;202;183m",
+    "$e[38;2;255;206;181m","$e[38;2;255;210;179m","$e[38;2;255;214;177m",
+    "$e[38;2;255;218;175m","$e[38;2;255;222;173m","$e[38;2;255;226;172m",
+    "$e[38;2;255;230;171m","$e[38;2;255;234;170m","$e[38;2;255;238;170m",
+    "$e[38;2;255;242;170m","$e[38;2;255;246;170m","$e[38;2;255;250;170m",
+    "$e[38;2;253;252;172m","$e[38;2;248;254;174m","$e[38;2;243;255;176m",
+    "$e[38;2;235;255;178m","$e[38;2;227;255;180m","$e[38;2;219;255;182m",
+    "$e[38;2;211;255;184m","$e[38;2;203;255;186m","$e[38;2;195;255;190m",
+    "$e[38;2;190;255;195m","$e[38;2;185;255;200m","$e[38;2;180;255;208m",
+    "$e[38;2;178;255;216m","$e[38;2;176;255;224m","$e[38;2;174;255;232m",
+    "$e[38;2;172;255;240m","$e[38;2;172;252;248m","$e[38;2;172;248;252m",
+    "$e[38;2;172;244;255m","$e[38;2;172;238;255m","$e[38;2;174;232;255m",
+    "$e[38;2;176;226;255m","$e[38;2;178;220;255m","$e[38;2;180;214;255m",
+    "$e[38;2;182;208;255m","$e[38;2;184;202;255m","$e[38;2;186;196;255m",
+    "$e[38;2;188;192;255m","$e[38;2;190;188;255m","$e[38;2;192;185;255m"
+)
+
+function Get-RainbowText {
+    param([string]$Text)
+
+    $chars = $Text.ToCharArray()
+    $len = $chars.Length
+    $out = ""
+
+    for ($i = 0; $i -lt $len; $i++) {
+        $idx = [Math]::Floor(($i / $len) * $rainbow.Length)
+        if ($idx -ge $rainbow.Length) { $idx = $rainbow.Length - 1 }
+        $out += $rainbow[$idx] + $chars[$i]
+    }
+
+    "$out$r"
+}
+
+
+
+
 
 # Check if script is running as Administrator
 If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")) {
@@ -14,14 +59,14 @@ If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 
 
 # Set window title and color scheme 
-$Host.UI.RawUI.WindowTitle = "Muchility " + $muchiver
+$Host.UI.RawUI.WindowTitle = "Muchility " + $Muchiver
 $Host.UI.RawUI.BackgroundColor = "Black"
 $Host.PrivateData.ProgressBackgroundColor = "Black"
 $Host.PrivateData.ProgressForegroundColor = "White"
 Clear-Host
 
 
-$muchiver = (Invoke-WebRequest "https://raw.githubusercontent.com/Muchi404/muchi-pub/refs/heads/main/muchiver.txt").Content
+$Muchiver = (Invoke-WebRequest "https://raw.githubusercontent.com/Muchi404/muchi-pub/refs/heads/main/muchiver.txt").Content
 
 
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,11 +184,11 @@ $script:loop = $true
 
 # Header
 function Show-Header {
-	$Host.UI.RawUI.WindowTitle = "Muchility " + $muchiver
+	$Host.UI.RawUI.WindowTitle = "Muchility " + $Muchiver
     Clear-Host
-    Write-Host "" 
-    Write-Host "NO LIABILITY ACCEPTED, PROCEED WITH CAUTION!" -ForegroundColor Black -BackgroundColor Red
-    Write-Host ""
+	Write-Host "NO LIABILITY ACCEPTED, PROCEED WITH CAUTION!" -ForegroundColor Black -BackgroundColor Red
+	Write-Host ""
+    Write-Host (Get-RainbowText "MUCHILITY $Muchiver")
 }
 
 
@@ -151,18 +196,19 @@ function Show-Header {
 function Show-MuchilityMainMenu {
 	Clear-Host
     Show-Header
-    Write-Host "Muchility Main Menu:" -ForegroundColor Yellow
-    Write-Host "1. Software & Apps"
-    Write-Host "2. Privacy & Security"
-    Write-Host "3. Windows Updates"
-    Write-Host "4. Optimize Registry"
-    Write-Host "5. Tasks & Services"
-    Write-Host "6. Power Settings"
-	Write-Host "7. System Repair"
-	Write-Host "8. Clear Temp + Prefetch"
-	Write-Host "9. Apply All Settings"
-    Write-Host ""
+	
+    Write-Host (Get-RainbowText "1. Software & Apps")
+    Write-Host (Get-RainbowText "2. Privacy & Security")
+    Write-Host (Get-RainbowText "3. Windows Updates")
+    Write-Host (Get-RainbowText "4. Optimize Registry")
+    Write-Host (Get-RainbowText "5. Tasks & Services")
+    Write-Host (Get-RainbowText "6. Power Settings")
+	Write-Host (Get-RainbowText "7. System Repair")
+	Write-Host (Get-RainbowText "8. Clear Temp + Prefetch")
+	Write-Host (Get-RainbowText "9. Apply All Settings")
+	Write-Host ""
     $choice = Read-Host "Select an option"
+	
 
     switch ($choice) {
         "1" { Show-SoftwareMenu }
@@ -193,11 +239,11 @@ function Show-MuchilityMainMenu {
 Function Show-SoftwareMenu {
     Clear-Host
 	Show-Header
-    Write-Host "=== Software & Apps Menu ===" -ForegroundColor Cyan
-    Write-Host "1. Install Microsoft Store (If Missing)"
-    Write-Host "2. Uninstall One Drive"
-    Write-Host "3. Disable Windows App Annoyances"
-    Write-Host "0. Back to Main Menu"
+    Write-Host (Get-RainbowText "=== Software & Apps Menu ===")
+    Write-Host (Get-RainbowText "1. Install Microsoft Store (If Missing)")
+    Write-Host (Get-RainbowText "2. Uninstall One Drive")
+    Write-Host (Get-RainbowText "3. Disable Windows App Annoyances")
+    Write-Host (Get-RainbowText "0. Back to Main Menu")
     
 	Write-Host ""
     $choice = Read-Host "Select an option"
@@ -313,11 +359,11 @@ Function Set-AppsRegistry {
 Function Show-PrivacySecurityMenu {
     Clear-Host
 	Show-Header
-    Write-Host "=== Privacy & Security Menu ===" -ForegroundColor Cyan
-    Write-Host "1. Recommended Privacy Settings"
-    Write-Host "2. Default Privacy Settings"
-    Write-Host "3. Enable Windows Defender"
-    Write-Host "0. Back to Main Menu"
+    Write-Host (Get-RainbowText "=== Privacy & Security Menu ===")
+    Write-Host (Get-RainbowText "1. Recommended Privacy Settings")
+    Write-Host (Get-RainbowText "2. Default Privacy Settings")
+    Write-Host (Get-RainbowText "3. Enable Windows Defender")
+    Write-Host (Get-RainbowText "0. Back to Main Menu")
 
     Write-Host ""
     $choice = Read-Host "Select an option"
@@ -463,10 +509,10 @@ Function Set-DefaultPrivacySettings {
 Function Show-WindowsUpdateMenu {
     Clear-Host
 	Show-Header
-    Write-Host "=== Windows Updates Menu ===" -ForegroundColor Cyan
-    Write-Host "1. Recommended Update Settings"
-    Write-Host "2. Default Update Settings"
-    Write-Host "0. Back to Main Menu"
+    Write-Host (Get-RainbowText "=== Windows Updates Menu ===")
+    Write-Host (Get-RainbowText "1. Recommended Update Settings")
+    Write-Host (Get-RainbowText "2. Default Update Settings")
+    Write-Host (Get-RainbowText "0. Back to Main Menu")
 
     Write-Host ""
     $choice = Read-Host "Select an option"
@@ -560,12 +606,12 @@ Function Set-DefaultUpdateSettings {
 Function Show-OptimizeRegistryMenu {
     Clear-Host
 	Show-Header
-    Write-Host "=== Optimize Registry Menu ===" -ForegroundColor Cyan
-    Write-Host "1. Recommended Local Machine Tweaks"
-    Write-Host "2. Default Local Machine Tweaks"
-    Write-Host "3. Recommended User Tweaks"
-    Write-Host "4. Default User Tweaks"
-    Write-Host "0. Back to Main Menu"
+    Write-Host (Get-RainbowText "=== Optimize Registry Menu ===")
+    Write-Host (Get-RainbowText "1. Recommended Local Machine Tweaks")
+    Write-Host (Get-RainbowText "2. Default Local Machine Tweaks")
+    Write-Host (Get-RainbowText "3. Recommended User Tweaks")
+    Write-Host (Get-RainbowText "4. Default User Tweaks")
+    Write-Host (Get-RainbowText "0. Back to Main Menu")
 
     Write-Host ""
     $choice = Read-Host "Select an option"
@@ -1158,12 +1204,12 @@ Remove-Item -Path "HKCU:\Software\Classes\CLSID\{e88865ea-0e1c-4e20-9aa6-edcd021
 Function Show-TasksServicesMenu {
     Clear-Host
 	Show-Header
-    Write-Host "=== Tasks & Services Menu ===" -ForegroundColor Cyan
-    Write-Host "1. Recommended Services"
-    Write-Host "2. Default Services"
-    Write-Host "3. Recommended Scheduled Tasks"
-    Write-Host "4. Default Scheduled Tasks"
-    Write-Host "0. Back to Main Menu"
+    Write-Host (Get-RainbowText "=== Tasks & Services Menu ===")
+    Write-Host (Get-RainbowText "1. Recommended Services")
+    Write-Host (Get-RainbowText "2. Default Services")
+    Write-Host (Get-RainbowText "3. Recommended Scheduled Tasks")
+    Write-Host (Get-RainbowText "4. Default Scheduled Tasks")
+    Write-Host (Get-RainbowText "0. Back to Main Menu")
 
     Write-Host ""
     $choice = Read-Host "Select an option"
@@ -1428,10 +1474,10 @@ function Enable-ScheduledTasks {
 Function Show-PowerSettingsMenu {
     Clear-Host
 	Show-Header
-    Write-Host "=== Power Settings Menu ===" -ForegroundColor Cyan
-    Write-Host "1. Recommended Power Settings"
-    Write-Host "2. Default Power Settings"
-    Write-Host "0. Back to Main Menu"
+    Write-Host (Get-RainbowText "=== Power Settings Menu ===")
+    Write-Host (Get-RainbowText "1. Recommended Power Settings")
+    Write-Host (Get-RainbowText "2. Default Power Settings")
+    Write-Host (Get-RainbowText "0. Back to Main Menu")
 
     Write-Host ""
     $choice = Read-Host "Select an option"
@@ -1579,10 +1625,10 @@ function Set-DefaultPowerSettings {
 Function Show-UpgradeActivateMenu {
     Clear-Host
 	Show-Header
-    Write-Host "=== Upgrade + Activate Menu ===" -ForegroundColor Cyan
-    Write-Host "1. Upgrade Windows"
-    Write-Host "2. Activate Windows"
-    Write-Host "0. Back to Main Menu"
+    Write-Host (Get-RainbowText "=== Upgrade + Activate Menu ===")
+    Write-Host (Get-RainbowText "1. Upgrade Windows")
+    Write-Host (Get-RainbowText "2. Activate Windows")
+    Write-Host (Get-RainbowText "0. Back to Main Menu")
 
     Write-Host ""
     $choice = Read-Host "Select an option"
@@ -1670,7 +1716,7 @@ Function Clear-Temp {
     foreach ($folder in $folders) {
         $sizeBefore = Get-FolderSize $folder.Path
         Remove-TempFolder $folder.Path
-        Write-Host ("Cleared " + $folder.Name + " Files - Saved " + $sizeBefore + " MB") -ForegroundColor Green
+        Write-Host (Get-RainbowText ("Cleared " + $folder.Name + " Files - Saved " + $sizeBefore + " MB"))
         Start-Sleep -Seconds 2
         Clear-Host
     }
