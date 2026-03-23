@@ -12,7 +12,8 @@ If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 }
 
 
-# Set window title and color scheme 
+
+# Set window title and color scheme
 $Host.UI.RawUI.WindowTitle = "Muchility"
 $Host.UI.RawUI.BackgroundColor = "Black"
 $Host.PrivateData.ProgressBackgroundColor = "Black"
@@ -21,13 +22,9 @@ Clear-Host
 
 
 
-
-
-
-
-# ==========================
-#  RAINBOW
-# ==========================
+#///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+# 														RAINBOW
+#///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $e = [char]27
 $r = "$e[0m"
@@ -69,122 +66,13 @@ function Get-RainbowText {
 
 
 
-
-
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-function Show-Apply-All-Menu {
-	Clear-Host
-    Show-Header
-    Write-Host "Apply All Menu:" -ForegroundColor Yellow
-	Write-Host "1. Reset All To Default Settings"
-	Write-Host "2. Apply All Recommended Settings"
-	Write-Host "0. Back to Main Menu"
-    
-    Write-Host ""
-    $choice = Read-Host "Select an option"
-
-    switch ($choice) {
-		"1" { Default-All }
-		"2" { Recommended-All }
-		"0" { Show-MuchilityMainMenu }
-		
-        default {
-            Write-Host "Invalid selection. Please try again." -ForegroundColor Red
-            Start-Sleep -Seconds 1
-        }
-    }
-}
-
-
-function Default-All {
-    Set-DefaultPrivacySettings *> $null
-    Write-Host "Privacy settings have been reset to default."
-    Start-Sleep -Seconds 2
-    Clear-Host
-
-    Set-DefaultHKCURegistry *> $null
-    Write-Host "HKCU registry defaults applied."
-    Start-Sleep -Seconds 2
-    Clear-Host
-
-    Set-DefaultHKLMRegistry *> $null
-    Write-Host "HKLM registry defaults applied."
-    Start-Sleep -Seconds 2
-    Clear-Host
-
-    Set-DefaultPowerSettings *> $null
-    Write-Host "Power settings restored to default."
-    Start-Sleep -Seconds 2
-    Clear-Host
-
-    Set-DefaultUpdateSettings *> $null
-    Write-Host "Update settings reset to default."
-    Start-Sleep -Seconds 2
-    Clear-Host
-
-    Set-DefaultServices *> $null
-    Write-Host "Default services configured."
-    Start-Sleep -Seconds 2
-    Clear-Host
-
-    Enable-ScheduledTasks *> $null
-    Write-Host "Scheduled tasks enabled."
-    Start-Sleep -Seconds 2
-    Clear-Host
-}
-
-
-function Recommended-All {
-    Set-RecommendedPrivacySettings *> $null
-    Write-Host "Privacy settings optimized."
-    Start-Sleep -Seconds 2
-    Clear-Host
-
-    Set-RecommendedHKCURegistry *> $null
-    Write-Host "HKCU registry configured to recommended settings."
-    Start-Sleep -Seconds 2
-    Clear-Host
-
-    Set-RecommendedHKLMRegistry *> $null
-    Write-Host "HKLM registry configured to recommended settings."
-    Start-Sleep -Seconds 2
-    Clear-Host
-
-    Set-RecommendedPowerSettings *> $null
-    Write-Host "Power settings optimized to recommended settings."
-    Start-Sleep -Seconds 2
-    Clear-Host
-
-    Set-RecommendedUpdateSettings *> $null
-    Write-Host "Update settings optimized."
-    Start-Sleep -Seconds 2
-    Clear-Host
-
-    Set-ServiceStartup *> $null
-    Write-Host "Services configured to recommended settings."
-    Start-Sleep -Seconds 2
-    Clear-Host
-
-    Disable-ScheduledTasks *> $null
-    Write-Host "Scheduled tasks disabled."
-    Start-Sleep -Seconds 2
-    Clear-Host
-}
-
-
-
-
-
-# START OF MENU FUNCTIONS
+# 														MENU FUNCTIONS
 $script:loop = $true
 
 
 
-
-
-# Header
+# 														HEADER
 function Show-Header {
 	$Host.UI.RawUI.WindowTitle = "Muchility"
     Clear-Host
@@ -195,7 +83,7 @@ function Show-Header {
 }
 
 
-# Main Menu
+# 														MAIN MENU
 function Show-MuchilityMainMenu {
 	Clear-Host
     Show-Header
@@ -232,6 +120,9 @@ function Show-MuchilityMainMenu {
 
 
 
+# 														END OF MENU FUNCTIONS
+#///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -257,9 +148,6 @@ Function Show-SoftwareMenu {
         default { Write-Host "Selected: $choice"; Show-SoftwareMenu }
     }
 }
-
-
-
 
 
 # Install the Microsoft Store
@@ -352,8 +240,6 @@ Function Set-AppsRegistry {
 
 
 
-
-
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # 														2. Privacy & Security
 
@@ -377,8 +263,6 @@ Function Show-PrivacySecurityMenu {
         default { Write-Host "Selected: $choice"; Show-PrivacySecurityMenu }
     }
 }
-
-
 
 
 
@@ -501,9 +385,6 @@ Function Set-DefaultPrivacySettings {
 
 
 
-
-
-
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # 														3. Windows Updates
 
@@ -525,7 +406,6 @@ Function Show-WindowsUpdateMenu {
         default { Write-Host "Selected: $choice"; Show-WindowsUpdateMenu }
     }
 }
-
 
 
 
@@ -599,8 +479,6 @@ Function Set-DefaultUpdateSettings {
 
 
 
-
-
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # 														4. Optimize Registry
 
@@ -626,8 +504,6 @@ Function Show-OptimizeRegistryMenu {
         default { Write-Host "Selected: $choice"; Show-OptimizeRegistryMenu }
     }
 }
-
-
 
 
 
@@ -1197,8 +1073,6 @@ Remove-Item -Path "HKCU:\Software\Classes\CLSID\{e88865ea-0e1c-4e20-9aa6-edcd021
 
 
 
-
-
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # 														5. Tasks & Services
 
@@ -1224,7 +1098,6 @@ Function Show-TasksServicesMenu {
         default { Write-Host "Selected: $choice"; Show-TasksServicesMenu }
     }
 }
-
 
 
 
@@ -1467,8 +1340,6 @@ function Enable-ScheduledTasks {
 
 
 
-
-
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # 														6. Power Settings
 
@@ -1490,7 +1361,6 @@ Function Show-PowerSettingsMenu {
         default { Write-Host "Selected: $choice"; Show-PowerSettingsMenu }
     }
 }
-
 
 
 
@@ -1617,60 +1487,8 @@ function Set-DefaultPowerSettings {
 
 
 
-
-
-
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-# 														7. Upgrade + Activate Windows
-
-
-Function Show-UpgradeActivateMenu {
-    Clear-Host
-	Show-Header
-    Write-Host (Get-RainbowText "=== Upgrade + Activate Menu ===")
-    Write-Host (Get-RainbowText "1. Upgrade Windows")
-    Write-Host (Get-RainbowText "2. Activate Windows")
-    Write-Host (Get-RainbowText "0. Back to Main Menu")
-
-    Write-Host ""
-    $choice = Read-Host "Select an option"
-    switch ($choice) {
-		"1" { Upgrade-Win }  
-        "2" { Activate-Win } 
-        "0" { Show-MuchilityMainMenu }
-        default { Write-Host "Selected: $choice"; Show-UpgradeActivateMenu }
-    }
-}
-
-
-
-
-
-# Upgrade Windows Function
-Function Upgrade-Win {
-    try {
-        $null = sc.exe config LicenseManager start= auto > $null 2>&1
-        $null = net start LicenseManager > $null 2>&1
-
-        $null = sc.exe config wuauserv start= auto > $null 2>&1
-        $null = net start wuauserv > $null 2>&1
-
-        & "changepk.exe" /productkey "VK7JG-NPHTM-C97JM-9MPGT-3V66T"
-    } catch {
-        throw $_
-    }
-}
-
-
-# Activate Windows Function
-Function Activate-Win {
-    Start-Process -FilePath "powershell.exe" -ArgumentList '-NoProfile -WindowStyle Normal -Command "iwr -Useb https://get.activated.win/ | iex"'
-}
-
-
-
-#///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-# 														8. System Repair
+# 														7. System Repair
 
 
 # System Repair Function
@@ -1682,10 +1500,8 @@ Function System-Repair {
 
 
 
-
-
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-# 														9. Clear Temp
+# 														8. Clear Temp
 
 
 Function Clear-Temp {
@@ -1726,27 +1542,108 @@ Function Clear-Temp {
 
 
 
+#///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+# 														9. Apply All
 
 
+function Show-Apply-All-Menu {
+	Clear-Host
+    Show-Header
+    Write-Host "Apply All Menu:" -ForegroundColor Yellow
+	Write-Host "1. Reset All To Default Settings"
+	Write-Host "2. Apply All Recommended Settings"
+	Write-Host "0. Back to Main Menu"
+    
+    Write-Host ""
+    $choice = Read-Host "Select an option"
+
+    switch ($choice) {
+		"1" { Default-All }
+		"2" { Recommended-All }
+		"0" { Show-MuchilityMainMenu }
+		
+        default {
+            Write-Host "Invalid selection. Please try again." -ForegroundColor Red
+            Start-Sleep -Seconds 1
+        }
+    }
+}
 
 
+function Default-All {
+    Set-DefaultPrivacySettings *> $null
+    Write-Host "Privacy settings have been reset to default."
+    Start-Sleep -Seconds 2
+    Clear-Host
+
+    Set-DefaultHKCURegistry *> $null
+    Write-Host "HKCU registry defaults applied."
+    Start-Sleep -Seconds 2
+    Clear-Host
+
+    Set-DefaultHKLMRegistry *> $null
+    Write-Host "HKLM registry defaults applied."
+    Start-Sleep -Seconds 2
+    Clear-Host
+
+    Set-DefaultPowerSettings *> $null
+    Write-Host "Power settings restored to default."
+    Start-Sleep -Seconds 2
+    Clear-Host
+
+    Set-DefaultUpdateSettings *> $null
+    Write-Host "Update settings reset to default."
+    Start-Sleep -Seconds 2
+    Clear-Host
+
+    Set-DefaultServices *> $null
+    Write-Host "Default services configured."
+    Start-Sleep -Seconds 2
+    Clear-Host
+
+    Enable-ScheduledTasks *> $null
+    Write-Host "Scheduled tasks enabled."
+    Start-Sleep -Seconds 2
+    Clear-Host
+}
 
 
+function Recommended-All {
+    Set-RecommendedPrivacySettings *> $null
+    Write-Host "Privacy settings optimized."
+    Start-Sleep -Seconds 2
+    Clear-Host
 
+    Set-RecommendedHKCURegistry *> $null
+    Write-Host "HKCU registry configured to recommended settings."
+    Start-Sleep -Seconds 2
+    Clear-Host
 
+    Set-RecommendedHKLMRegistry *> $null
+    Write-Host "HKLM registry configured to recommended settings."
+    Start-Sleep -Seconds 2
+    Clear-Host
 
+    Set-RecommendedPowerSettings *> $null
+    Write-Host "Power settings optimized to recommended settings."
+    Start-Sleep -Seconds 2
+    Clear-Host
 
+    Set-RecommendedUpdateSettings *> $null
+    Write-Host "Update settings optimized."
+    Start-Sleep -Seconds 2
+    Clear-Host
 
+    Set-ServiceStartup *> $null
+    Write-Host "Services configured to recommended settings."
+    Start-Sleep -Seconds 2
+    Clear-Host
 
-
-
-
-
-
-
-
-
-
+    Disable-ScheduledTasks *> $null
+    Write-Host "Scheduled tasks disabled."
+    Start-Sleep -Seconds 2
+    Clear-Host
+}
 
 
 
@@ -1754,10 +1651,7 @@ Show-MuchilityMainMenu
 
 
 
-
-
 # Main loop to keep showing the main menu
 while ($script:loop) {
     Show-MuchilityMainMenu
 }
-
