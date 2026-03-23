@@ -11,6 +11,7 @@ If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
     }
     Catch {
         Write-Host "Failed to run as Administrator. Please rerun with elevated privileges."
+		Start-Sleep -Seconds 4
         Exit
     }
 }
@@ -203,7 +204,6 @@ Function Show-SoftwareMenu {
     Write-Host "1. Install Microsoft Store (If Missing)"
     Write-Host "2. Uninstall One Drive"
     Write-Host "3. Disable Windows App Annoyances"
-	Write-Host "4. Muchi's Debloat "
     Write-Host "0. Back to Main Menu"
     
 	Write-Host ""
@@ -212,7 +212,6 @@ Function Show-SoftwareMenu {
 		"1" { Install-Store }  
         "2" { RemoveAndUninstall-OneDrive } 
         "3" { Set-AppsRegistry } 
-		"4" { Muchi-Debloater }
         "0" { Show-MuchilityMainMenu }
         default { Write-Host "Selected: $choice"; Show-SoftwareMenu }
     }
@@ -307,47 +306,6 @@ Function Set-AppsRegistry {
 	Disable-WindowsOptionalFeature -Online -FeatureName "Recall" -NoRestart -ErrorAction SilentlyContinue
 	
 	Write-Host "Disabled Cortana, Copilot, Chat, Dev Home, Outlook, Recall & OneDrive Backups!" -ForegroundColor Green
-	Start-Sleep -Seconds 2
-}
-
-
-# Muchi's Debloater
-Function Muchi-Debloater {
-
-	$GoodApps = "roblox|calculator|store|windowsnotepad|chatgpt|minecraft|nvidia|Microsoft.Xbox.TCUI|XboxGameCallableUI|XboxGamingOverlay|XboxIdentityProvider|ImageMagick|NotepadPlusPlus|Microsoft.WindowsNotepad|Microsoft.MicrosoftEdge.Stable|AdvancedMicroDevices|Python"
-    # SafeApps contains apps that shouldn't be removed, or just can't and cause errors
-    $SafeApps = "AAD.brokerplugin|accountscontrol|apprep.chxapp|assignedaccess|asynctext|bioenrollment|capturepicker|cloudexperience|contentdelivery|desktopappinstaller|ecapp|edge|extension|getstarted|immersivecontrolpanel|lockapp|net.native|oobenet|parentalcontrols|PPIProjection|search|sechealth|secureas|shellexperience|startmenuexperience|terminal|vclibs|xaml|XGpuEject"
-    
-    If ($Xbox) {
-        $SafeApps = "$SafeApps|Xbox"
-    }
-    
-    If ($Allapps) {
-        $RemoveApps = Get-AppxPackage -allusers | where-object {$_.name -notmatch $SafeApps}
-        $RemovePrApps = Get-AppxProvisionedPackage -online | where-object {$_.displayname -notmatch $SafeApps}
-        
-        ForEach ($RemovedApp in $RemoveApps) {
-            Remove-AppxPackage -package $RemovedApp -erroraction silentlycontinue
-        }
-        
-        ForEach ($RemovedPrApp in $RemovePrApps) {
-            Remove-AppxProvisionedPackage -online -packagename $RemovedPrApp.packagename -erroraction silentlycontinue
-        }
-    } Else {
-        $SafeApps = "$SafeApps|$GoodApps"
-        $RemoveApps = Get-AppxPackage -allusers | where-object {$_.name -notmatch $SafeApps}
-        $RemovePrApps = Get-AppxProvisionedPackage -online | where-object {$_.displayname -notmatch $SafeApps}
-        
-        ForEach ($RemovedApp in $RemoveApps) {
-            Remove-AppxPackage -package $RemovedApp -erroraction silentlycontinue
-        }
-        
-        ForEach ($RemovedPrApp in $RemovePrApps) {
-            Remove-AppxProvisionedPackage -online -packagename $RemovedPrApp.packagename -erroraction silentlycontinue
-        }
-    }
-}
-
 	Start-Sleep -Seconds 2
 }
 
