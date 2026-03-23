@@ -198,7 +198,7 @@ function Show-Header {
 function Show-MuchilityMainMenu {
 	Clear-Host
     Show-Header
-	
+	Write-Host ""
     Write-Host (Get-RainbowText "1. Software & Apps")
     Write-Host (Get-RainbowText "2. Privacy & Security")
     Write-Host (Get-RainbowText "3. Windows Updates")
