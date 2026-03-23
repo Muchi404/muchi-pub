@@ -1,3 +1,30 @@
+# Check if script is running as Administrator
+If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")) {
+    Try {
+        Start-Process PowerShell.exe -ArgumentList ("-NoProfile -ExecutionPolicy Bypass -File `"{0}`"" -f $PSCommandPath) -Verb RunAs
+        Exit
+    }
+    Catch {
+        Write-Host "Failed to run as Administrator. Please rerun with elevated privileges."
+		Start-Sleep -Seconds 4
+        Exit
+    }
+}
+
+
+# Set window title and color scheme 
+$Host.UI.RawUI.WindowTitle = "Muchility " + $Muchiver
+$Host.UI.RawUI.BackgroundColor = "Black"
+$Host.PrivateData.ProgressBackgroundColor = "Black"
+$Host.PrivateData.ProgressForegroundColor = "White"
+Clear-Host
+
+
+$Muchiver = (Invoke-WebRequest "https://raw.githubusercontent.com/Muchi404/muchi-pub/refs/heads/main/muchiver.txt").Content
+
+
+
+
 # ==========================
 #  RAINBOW
 # ==========================
@@ -42,31 +69,6 @@ function Get-RainbowText {
 
 
 
-
-
-# Check if script is running as Administrator
-If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")) {
-    Try {
-        Start-Process PowerShell.exe -ArgumentList ("-NoProfile -ExecutionPolicy Bypass -File `"{0}`"" -f $PSCommandPath) -Verb RunAs
-        Exit
-    }
-    Catch {
-        Write-Host "Failed to run as Administrator. Please rerun with elevated privileges."
-		Start-Sleep -Seconds 4
-        Exit
-    }
-}
-
-
-# Set window title and color scheme 
-$Host.UI.RawUI.WindowTitle = "Muchility " + $Muchiver
-$Host.UI.RawUI.BackgroundColor = "Black"
-$Host.PrivateData.ProgressBackgroundColor = "Black"
-$Host.PrivateData.ProgressForegroundColor = "White"
-Clear-Host
-
-
-$Muchiver = (Invoke-WebRequest "https://raw.githubusercontent.com/Muchi404/muchi-pub/refs/heads/main/muchiver.txt").Content
 
 
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
