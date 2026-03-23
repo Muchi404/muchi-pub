@@ -191,6 +191,7 @@ function Show-Header {
 	Write-Host "NO LIABILITY ACCEPTED, PROCEED WITH CAUTION!" -ForegroundColor Black -BackgroundColor Red
 	Write-Host ""
     Write-Host (Get-RainbowText "MUCHILITY")
+	Write-Host ""
 }
 
 
@@ -198,7 +199,6 @@ function Show-Header {
 function Show-MuchilityMainMenu {
 	Clear-Host
     Show-Header
-	Write-Host ""
     Write-Host (Get-RainbowText "1. Software & Apps")
     Write-Host (Get-RainbowText "2. Privacy & Security")
     Write-Host (Get-RainbowText "3. Windows Updates")
