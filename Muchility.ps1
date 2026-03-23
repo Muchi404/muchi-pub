@@ -1549,10 +1549,10 @@ Function Clear-Temp {
 function Show-Apply-All-Menu {
 	Clear-Host
     Show-Header
-    Write-Host "Apply All Menu:" -ForegroundColor Yellow
-	Write-Host "1. Reset All To Default Settings"
-	Write-Host "2. Apply All Recommended Settings"
-	Write-Host "0. Back to Main Menu"
+    Write-Host (Get-RainbowText "Apply All Menu:")
+	Write-Host (Get-RainbowText "1. Reset All To Default Settings")
+	Write-Host (Get-RainbowText "2. Apply All Recommended Settings")
+	Write-Host (Get-RainbowText "0. Back to Main Menu")
     
     Write-Host ""
     $choice = Read-Host "Select an option"
