@@ -1,7 +1,3 @@
-#╔══╗══╗╔═╗═╗╔═══╗╔═╗╔═╗╔═╗
-#║     ║║ ║ ║║ ║ ║║ ╚╝ ║╠-╣
-#║ ║ ║ ║║ ║ ║║ ╚═╣║ ╔╗ ║║ ║
-#╚═╩═╩═╝╚═══╝╚═══╝╚═╝╚═╝╚═╝
 
 # Check if script is running as Administrator
 If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")) {
@@ -11,6 +7,7 @@ If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
     }
     Catch {
         Write-Host "Failed to run as Administrator. Please rerun with elevated privileges."
+		Start-Sleep -Seconds 4
         Exit
     }
 }
@@ -142,11 +139,8 @@ $script:loop = $true
 
 # Header
 function Show-Header {
-	$Host.UI.RawUI.WindowTitle = "Muchility" + " (Administrator)" 
+	$Host.UI.RawUI.WindowTitle = "Muchility"
     Clear-Host
-    Write-Host "============================================" -ForegroundColor Cyan
-    Write-Host "                 MUCHILITY                  " -ForegroundColor Yellow
-    Write-Host "============================================" -ForegroundColor Cyan
     Write-Host "" 
     Write-Host "NO LIABILITY ACCEPTED, PROCEED WITH CAUTION!" -ForegroundColor Black -BackgroundColor Red
     Write-Host ""
@@ -203,7 +197,6 @@ Function Show-SoftwareMenu {
     Write-Host "1. Install Microsoft Store (If Missing)"
     Write-Host "2. Uninstall One Drive"
     Write-Host "3. Disable Windows App Annoyances"
-	Write-Host "4. Muchi's Debloat "
     Write-Host "0. Back to Main Menu"
     
 	Write-Host ""
@@ -212,8 +205,6 @@ Function Show-SoftwareMenu {
 		"1" { Install-Store }  
         "2" { RemoveAndUninstall-OneDrive } 
         "3" { Set-AppsRegistry } 
-		"4" { Write-Host "Muchi's Debloater started in background." -ForegroundColor Yellow
-		Start-Job -ScriptBlock { Muchi-Debloater } | Out-Null}
         "0" { Show-MuchilityMainMenu }
         default { Write-Host "Selected: $choice"; Show-SoftwareMenu }
     }
@@ -308,37 +299,6 @@ Function Set-AppsRegistry {
 	Disable-WindowsOptionalFeature -Online -FeatureName "Recall" -NoRestart -ErrorAction SilentlyContinue
 	
 	Write-Host "Disabled Cortana, Copilot, Chat, Dev Home, Outlook, Recall & OneDrive Backups!" -ForegroundColor Green
-	Start-Sleep -Seconds 2
-}
-
-
-# Muchi's Debloater
-Function Muchi-Debloater {
-
-    $MuchiDontRemove = "calculator|store|windowsnotepad|chatgpt|minecraft|nvidia|Microsoft.Xbox.TCUI|XboxGameCallableUI|XboxGamingOverlay|XboxIdentityProvider"
-    $DontRemove = "AAD.brokerplugin|accountscontrol|apprep.chxapp|assignedaccess|asynctext|bioenrollment|capturepicker|cloudexperience|contentdelivery|desktopappinstaller|ecapp|edge|extension|getstarted|immersivecontrolpanel|lockapp|net.native|oobenet|parentalcontrols|PPIProjection|search|sechealth|secureas|shellexperience|startmenuexperience|terminal|vclibs|xaml|XGpuEject"
-
-    If ($Xbox) {
-        $DontRemove = "$DontRemove|Xbox"
-    }
-
-    If (-not $Allapps) {
-        $DontRemove = "$DontRemove|$MuchiDontRemove"
-    }
-
-    $RemoveApps = Get-AppxPackage -AllUsers | Where-Object { $_.Name -notmatch $DontRemove }
-    $RemovePrApps = Get-AppxProvisionedPackage -Online | Where-Object { $_.DisplayName -notmatch $DontRemove }
-
-    ForEach ($App in $RemoveApps) {
-        Remove-AppxPackage -Package $App -ErrorAction SilentlyContinue
-    }
-
-    ForEach ($PrApp in $RemovePrApps) {
-        Remove-AppxProvisionedPackage -Online -PackageName $PrApp.PackageName -ErrorAction SilentlyContinue
-    }
-	Clear-Host
-	Write-Host "Windows has been debloated!" -ForegroundColor Green
-	
 	Start-Sleep -Seconds 2
 }
 
