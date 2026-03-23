@@ -14,14 +14,14 @@ If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 
 
 # Set window title and color scheme 
-$Host.UI.RawUI.WindowTitle = "Muchility"
+$Host.UI.RawUI.WindowTitle = "Muchility " + $muchiver
 $Host.UI.RawUI.BackgroundColor = "Black"
 $Host.PrivateData.ProgressBackgroundColor = "Black"
 $Host.PrivateData.ProgressForegroundColor = "White"
 Clear-Host
 
 
-
+$muchiver = (Invoke-WebRequest "https://raw.githubusercontent.com/Muchi404/muchi-pub/refs/heads/main/muchiver.txt").Content
 
 
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,7 +139,7 @@ $script:loop = $true
 
 # Header
 function Show-Header {
-	$Host.UI.RawUI.WindowTitle = "Muchility"
+	$Host.UI.RawUI.WindowTitle = "Muchility " + $muchiver
     Clear-Host
     Write-Host "" 
     Write-Host "NO LIABILITY ACCEPTED, PROCEED WITH CAUTION!" -ForegroundColor Black -BackgroundColor Red
