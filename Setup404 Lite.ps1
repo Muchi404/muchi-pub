@@ -37,6 +37,14 @@ Function Run-MuchiExe {
     Start-Process powershell -ArgumentList "iwr -useb 'muchi.online/exe' | iex"
 }
 
+Function Run-MPO {
+	Start-Process powershell -ArgumentList "iwr -useb 'muchi.online/mpo' | iex"
+}
+
+Function Run-Explorer {
+	Start-Process powershell -ArgumentList "iwr -useb 'muchi.online/explorer' | iex"
+}
+
 Function Install-Apps {
     winget install --id 7zip.7zip -e --silent
     winget install --id VideoLAN.VLC -e --silent
@@ -52,6 +60,8 @@ Run-MuchiDebloat
 Run-MuchiAIO
 Run-MuchiExtras
 Run-MuchiExe
+Run-MPO
+Run-Explorer
 Install-Apps
 }
 
