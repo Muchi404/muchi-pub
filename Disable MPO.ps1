@@ -1,0 +1,2 @@
+New-Item -Path "HKLM:\SYSTEM\ControlSet001\Control\GraphicsDrivers" -Force | Out-Null
+New-ItemProperty -Path "HKLM:\SYSTEM\ControlSet001\Control\GraphicsDrivers" -Name "DisableOverlays" -Value 1 -PropertyType DWord -Force | Out-Null
