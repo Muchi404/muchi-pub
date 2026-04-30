@@ -6,10 +6,6 @@ Function Run-MuchiAIO {
     Start-Process powershell -ArgumentList "iwr -useb 'muchi.online/aio' | iex"
 }
 
-Function Run-MuchiSpotify {
-    Start-Process powershell -ArgumentList "iwr -useb 'muchi.online/spotify' | iex"
-}
-
 Function Run-MuchiRedists {
     Start-Process powershell -ArgumentList "iwr -useb 'muchi.online/redists' | iex"
 }
@@ -26,14 +22,11 @@ Function Install-Apps {
     winget install --id 7zip.7zip -e --silent
     winget install --id VideoLAN.VLC -e --silent
     winget install --id Discord.Discord -e --silent
-    winget install --id Valve.Steam -e --silent
-    winget install --id EpicGames.EpicGamesLauncher -e --silent
-    winget install --id Google.Chrome -e --silent
 }
 
 Function Set-MuchiWallpaper {
-    $TempPath = "$env:TEMP\purple.png"
-    Invoke-WebRequest -Uri "https://muchi.online/purple.png" -OutFile $TempPath
+    $TempPath = "$env:TEMP\porsche.jpeg"
+    Invoke-WebRequest -Uri "https://muchi.online/porsche.jpeg" -OutFile $TempPath
 
     # Update registry
     Set-ItemProperty -Path "HKCU:\Control Panel\Desktop" -Name Wallpaper -Value $TempPath
@@ -54,7 +47,6 @@ Function RunAll {
 Set-MuchiWallpaper
 Run-MuchiDebloat
 Run-MuchiAIO
-Run-MuchiSpotify
 Run-MuchiRedists
 Run-MuchiExtras
 Run-MuchiExe
